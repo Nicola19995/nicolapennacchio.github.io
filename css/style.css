@@ -189,6 +189,73 @@ body {
 }
 .nav__cta:hover { background: var(--accent2); transform: scale(1.05); }
 
+/* Hamburger */
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 101;
+}
+.nav__burger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s var(--ease);
+}
+.nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__burger.open span:nth-child(2) { opacity: 0; }
+.nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu overlay */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(5, 5, 8, 0.97);
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.mobile-menu__link {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--light);
+  text-decoration: none;
+  letter-spacing: -0.03em;
+  padding: 10px 20px;
+  transition: color 0.2s;
+}
+.mobile-menu__link:hover { color: var(--white); }
+.mobile-menu__cta {
+  font-size: 1rem !important;
+  margin-top: 24px;
+  background: var(--accent);
+  color: #fff !important;
+  border-radius: 100px;
+  padding: 14px 32px !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 640px) {
+  .nav__burger { display: flex; }
+  .mobile-menu { display: flex; }
+}
+
 /* ============================================
    BUTTONS
    ============================================ */
@@ -876,22 +943,84 @@ body {
 /* ============================================
    RESPONSIVE
    ============================================ */
+
+/* Previene overflow orizzontale globale */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 @media (max-width: 900px) {
   .about__grid { grid-template-columns: 1fr; gap: 48px; }
   .skills__grid { grid-template-columns: repeat(2, 1fr); }
   .edu__grid { grid-template-columns: 1fr; }
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
   .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* timeline più stretta */
+  .timeline__item { grid-template-columns: 24px 1fr; gap: 16px; }
+  .timeline__content { padding: 24px 20px; }
+  .timeline__header { flex-direction: column; gap: 8px; }
+
+  /* code block scrollabile orizzontalmente, non rompe il layout */
+  .code-block { overflow: hidden; }
+  .code-block__body { overflow-x: auto; font-size: 12px; padding: 20px; }
 }
 
 @media (max-width: 640px) {
   .nav { padding: 16px 20px; }
   .nav__links, .nav__cta { display: none; }
   .skills__grid { grid-template-columns: 1fr; }
+  .edu__grid { grid-template-columns: 1fr; }
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
   .footer__inner { flex-direction: column; gap: 8px; text-align: center; }
   body { cursor: auto; }
   .cursor, .cursor-dot { display: none; }
+
+  /* hero */
+  .hero { padding: 0 20px; }
+  .hero__actions { flex-direction: column; align-items: center; }
+  .hero__actions .btn { width: 100%; justify-content: center; }
+
+  /* container padding ridotto */
+  .container { padding: 0 20px; }
+
+  /* sezioni */
+  .about    { padding: 80px 0; }
+  .experience { padding: 80px 0; }
+  .skills   { padding: 80px 0; }
+  .education { padding: 80px 0; }
+  .contact  { padding: 100px 0; }
+
+  /* code block mobile */
+  .code-block__body { font-size: 11px; padding: 16px; line-height: 1.7; }
+  .about__right { display: none; } /* nasconde il code block su mobile piccolo */
+
+  /* timeline mobile */
+  .timeline__item { grid-template-columns: 20px 1fr; gap: 12px; padding-bottom: 36px; }
+  .timeline__content { padding: 20px 16px; }
+  .timeline__role { font-size: 1rem; }
+  .timeline__tags { gap: 6px; }
+  .timeline__tags span { font-size: 10px; padding: 3px 9px; }
+
+  /* skill cards */
+  .skill-card { padding: 24px 20px; }
+
+  /* edu cards */
+  .edu-card { padding: 24px 20px; }
+
+  /* stats */
+  .stat-item { padding: 24px 16px; }
+
+  /* contact */
+  .contact__links { flex-direction: column; align-items: center; }
+  .contact__links .btn { width: 100%; justify-content: center; text-align: center; }
+
+  /* section titles più piccoli */
+  .section-title { margin-bottom: 36px; }
+
+  /* marquee — rallenta su mobile per leggibilità */
+  .marquee-track { animation-duration: 28s; }
 }
 
 @media (prefers-reduced-motion: reduce) {
