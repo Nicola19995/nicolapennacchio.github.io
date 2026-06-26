@@ -70,16 +70,31 @@ document.querySelectorAll('a, button, .skill-card, .timeline__content, .edu-card
 
 
 /* ═══════════════════════════════════════════
-   3. NAV scroll + active link tracking
+   3. NAV scroll + active link tracking + burger
    ═══════════════════════════════════════════ */
 const nav = document.getElementById('nav');
 const navLinks = document.querySelectorAll('.nav__links a');
 const sections = document.querySelectorAll('section[id]');
+const burger = document.getElementById('nav-burger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+// burger toggle
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+
+// chiudi menu mobile al click su un link
+document.querySelectorAll('.mobile-menu__link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
 
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 
-  // segna la voce attiva in base alla sezione visibile
   let current = '';
   sections.forEach(sec => {
     if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
